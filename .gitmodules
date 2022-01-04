@@ -1,0 +1,3 @@
+[submodule "modules/Named_Pipes_Multithread"]
+	path = modules/Named_Pipes_Multithread
+	url = https://github.com/Pietracoops/Named_Pipes_Multithread.git
