@@ -1,15 +1,28 @@
+#ifndef OBJECTS_H // header guards
+#define OBJECTS_H
+
 #include "3D_graphics.h"
 #include "navigation_system.h"
 #include <cmath>
 #include <vector>
 #include <ctime>
 #include <string>
+#include "../modules/Named_Pipes_Multithread/named_pipes/named_pipes/pipes.h"		   // IPC commands to commmunicate with python
 
+#include "../Reading_Program_Shared_Memory/program_B/shared_memory.h"	
+#include "../Reading_Program_Shared_Memory/program_B/SharedMemory.h"	
+
+static Pipes_Server Ipcserver("\\\\.\\pipe\\Foo");
 const double PI = 4 * atan(1.0);
+
+static SharedMemory SM("shared_memory1", 100, 0, 2);			              // Block of shared memory (size = n, 0 = queue number, 2 = number of programs in queue (from 0 to 1))
+
 class Vehicle
 {
 
 	char* Name;
+
+	int nav_size;
 
 	double dt;
 	double* Pos;
@@ -47,6 +60,8 @@ public:
 	double & get_friction();
 	double & get_meshextremities(int i, int j);
 
+	void set_starting_pos();
+	void set_theta(double input);
 	void set_music(char* wavfile);
 	void set_Scale(double Scale);
 	void draw();
@@ -105,3 +120,6 @@ public:
 
 
 };
+
+
+#endif

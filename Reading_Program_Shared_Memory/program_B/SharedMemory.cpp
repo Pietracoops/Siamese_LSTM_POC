@@ -67,55 +67,38 @@ SharedMemory::SharedMemory(char* Name, int Size, int q, int N)
 
 
 
-int SharedMemory::write_data(double* A, char* str)
+int SharedMemory::write_data(double* A, int* B, int* C )
 {
 
 	//first thing need to do is check if it is
 	//my turn to write into the shared data
 
 	int* pint = (int*)P;
-	double* dint = (double*)P;
-	int SizeOfString = strlen(str);
-	int SizeOfDoubleA = 100;
+	double* pdob = (double*)P;
+	char* pchar = (char*)P;
+	//int SizeOfString = strlen(str);
+	int SizeOfDoubleA = 1;
+	int SizeOfIntA = 1;
 	int counter;
 	int qvalue;
+	
+	int marker = 0;
+
+	int wait_time = 0;
+	int delay_time = 2;
+	int timeout = 10;
 
 
-
-	while (true)
+	qvalue = pint[0];
+	if (qvalue == q)
 	{
-		qvalue = pint[0];
-		if (qvalue == q)
-		{
 
+		pdob[1] = A[0];
+		pint[4] = B[0];
+		pint[5] = C[0];
 
-
-			//writing array of doubles
-			counter = 0;
-			for (int i = 1; i < (1 + SizeOfDoubleA); i++)
-			{
-				dint[i] = A[counter];
-				counter++;
-			}
-
-			//writing string
-			counter = 0;
-			for (int i = SizeOfDoubleA * 8 + 8; i < (8 + SizeOfString + SizeOfDoubleA * 8); i++)
-			{
-				P[i] = str[counter];
-				counter++;
-			}
-
-
-			//increment the q counter
-			qvalue++;
-			break;
-
-		}
-		else
-		{
-			Sleep(10);
-		}
+		//increment the q counter
+		pint[0] = ++qvalue;
 
 	}
 
@@ -125,27 +108,31 @@ int SharedMemory::write_data(double* A, char* str)
 	}
 
 
-	pint[0] = qvalue;
-
 	return 0;//1 if everything is good
 }
 
 
 
-int SharedMemory::read_data(double* A, char* str)
+int SharedMemory::read_data(double* A, int* B, int* C)
 {
 
 	//first thing need to do is check if it is
 	//my turn to write into the shared data
 
 	int* pint = (int*)P;
-	double* dint = (double*)P;
-	int SizeOfString = strlen(str);
+	double* pdob = (double*)P;
+	char* pchar = (char*)P;
+	//int SizeOfString = strlen(str);
 	int SizeOfDoubleA = 1;
+	int SizeOfIntA = 1;
 	int counter;
 	int qvalue;
 
+	int marker = 0;
 
+	int wait_time = 0;
+	int delay_time = 2;
+	int timeout = 10;
 
 	while (true)
 	{
@@ -158,23 +145,40 @@ int SharedMemory::read_data(double* A, char* str)
 			for (int i = 1; i < (1 + SizeOfDoubleA); i++)
 			{
 				//cout << dint[i] << endl;
-				A[counter] = dint[i];
+				A[counter] = pdob[i];
 				counter++;
 			}
 
+			marker = SizeOfDoubleA * 2 + 2;
+			////reading string
+			//counter = 0;
+			//for (int i = SizeOfDoubleA * 8 + 8; i < Size; i++)
+			//{
+			//
+			//	//cout << P[i];
+			//	str[counter] = P[i];
+			//	if (P[i] = '\n') break;
+			//	counter++;
+			//}
+			//cout << endl;
 
-			//reading string
+			//reading array of integers
 			counter = 0;
-			for (int i = SizeOfDoubleA * 8 + 8; i < Size; i++)
+			for (int i = marker; i < (marker + SizeOfIntA); i++)
 			{
-
-				//cout << P[i];
-				str[counter] = P[i];
+				//cout << dint[i] << endl;
+				B[counter] = pint[i];
 				counter++;
 			}
-			cout << endl;
-
-
+			marker += SizeOfIntA;
+			//reading array of integers
+			counter = 0;
+			for (int i = marker; i < (marker + SizeOfIntA); i++)
+			{
+				//cout << dint[i] << endl;
+				C[counter] = pint[i];
+				counter++;
+			}
 
 			//increment the q counter
 			qvalue++;
@@ -183,7 +187,11 @@ int SharedMemory::read_data(double* A, char* str)
 		}
 		else
 		{
-			Sleep(10);
+			break;
+			//if (wait_time > timeout) break;
+			//
+			//wait_time += delay_time;
+			//Sleep(delay_time);
 		}
 
 	}

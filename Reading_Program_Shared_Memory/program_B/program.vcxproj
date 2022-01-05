@@ -127,11 +127,13 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\modules\Named_Pipes_Multithread\named_pipes\named_pipes\pipes.cpp" />
     <ClCompile Include="program.cpp" />
     <ClCompile Include="SharedMemory.cpp" />
     <ClCompile Include="shared_memory.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\modules\Named_Pipes_Multithread\named_pipes\named_pipes\pipes.h" />
     <ClInclude Include="SharedMemory.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

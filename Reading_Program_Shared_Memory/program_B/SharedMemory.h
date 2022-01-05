@@ -13,9 +13,9 @@ public:
 	//Funcs
 	SharedMemory(char* Name, int Size, int q, int N);
 
-	int write_data(double* A, char* str);
+	int write_data(double* A, int* B, int* C);
 
-	int read_data(double* A, char* str);
+	int read_data(double* A, int* B, int* C);
 
 
 

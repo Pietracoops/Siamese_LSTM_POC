@@ -1,27 +1,30 @@
-#include <cmath>           // math functions
-#include <cstdio>          // standard I/O functions
-#include <cstring>         // string manipulation functions
-#include <iostream>        // console stream I/O
-#include <fstream>         // file stream I/O
-#include <strstream>       // string stream I/0
-#include <iomanip>         // I/O manipulators
-#include <windows.h>       // for keyboard input
-#include "math.h"	       // more math functions
-#include "Objects.h"       // Vehicle and maze functions
-#include "timer.h"         // for measuring time
-#include "rotation.h"      // for computing rotation functions
-#include "shared_memory.h" // Mech415 shared mem class 
-#include "SharedMemory.h"  // Custom SharedMemory class
+#include <cmath>				// math functions
+#include <cstdio>				// standard I/O functions
+#include <cstring>				// string manipulation functions
+#include <string>				// Standard string manip functions
+#include <iostream>				// console stream I/O
+#include <fstream>				// file stream I/O
+#include <strstream>			// string stream I/0
+#include <iomanip>				// I/O manipulators
+#include <windows.h>			// for keyboard input
+#include "math.h"				// more math functions
+#include "Objects.h"			// Vehicle and maze functions
+#include "timer.h"				// for measuring time
+#include "rotation.h"			// for computing rotation functions
 
+	  
+//#include "shared_memory.h"		// Mech415 shared mem class 
+//#include "SharedMemory.h"		// Custom SharedMemory class
+
+#include <thread>				// To create additional threads
 
 using namespace std;
-
 
 //**********FUNCTION DECLARATIONS**********************************
 int collision(Vehicle & Hovercraft, Walls* Wall[], int NumberOfWalls);						// Collision detection
 void Draw_Maze(Walls* Wall[]);																// Draw the maze
 void Generate_Maze(Walls* Wall[],int &errorcode);											// Set position of maze walls
-void Display_Instructions(double t, int &Restart, double &tfinal, int &current_command);	    // Show instructions at beginning of game
+void Display_Instructions(double t, int &Restart, double &tfinal, int &current_command);	// Show instructions at beginning of game
 void Display_Error(int ErrorCode);															// Display Error messages
 //*****************************************************************
 
@@ -40,13 +43,21 @@ float BACK_B = 0.5f;
 double VMIN = 0.25; 
 double VMAX = 1000.0; 
 
+ofstream fout;
+void thread1()
+{
+
+	//Launch broadcasting pipes
+	//Ipcserver.open_log();
+	std::cout << "Launching Server..." << std::endl;
+	Ipcserver.launch_server();
+}
 
 
 void draw_3D_graphics() 
 
 {
 	static const int N = 31;   // Number of walls
-	static const int n = 100;  // size of shared memory block (bytes)
 	static int errorcode = 0;  // Error code flag
 	static int init = 0;	   // initialization flag
 	static int CameraView;     // Setting first person / Third person view
@@ -64,12 +75,20 @@ void draw_3D_graphics()
 	static Vehicle Massimo("Assets\\hovercraft\\BHoverCraft10.x",errorcode);  // Hovercraft
 	static Walls *Anthony[N];									              // Walls
 	static mesh terrain("terrain.X");								          // Background
-	static SharedMemory SM("shared_memory1", n, 0, 2);			              // Block of shared memory (size = n, 0 = queue number, 2 = number of programs in queue (from 0 to 1))
+	
+
+
 	
 	//**********INITIALIZATION*************************************************
 	if (!init) {
 		init = 1;
 
+		fout.open("massimo.txt");
+		fout << "Launching thread" << std::endl;
+		
+
+
+		fout << "continuing in main thread" << std::endl;
 		Restart = 0;
 		t0 = high_resolution_time(); // initial clock time (s)
 		tfinal = 0;
@@ -84,19 +103,23 @@ void draw_3D_graphics()
 		Massimo.get_R(1) = 0;
 		Massimo.get_R(2) = PI / 2;
 		Massimo.set_Scale(0.004);
-	} 
+
+		//std::thread t1(thread1);
+		//t1.join();	// Launch Ipcserver thread
+
+		fout.close();
+	}
+	
 	//*************************************************************************
 
 
-	t = high_resolution_time() - t0;                        //Total sim duration
-	
-	SM.write_data(&t, unit);                                //Write time to shared memory
+	t = high_resolution_time() - t0;                        // Total sim duration
 
-	Massimo.store_highscore(BestTime, Restart, errorcode);  //Store highscore
+	Massimo.store_highscore(BestTime, Restart, errorcode);  // Store highscore
 
-	Massimo.get_R(0) = (3.14159 / 2) + Massimo.get_theta();	//rotating mesh
+	Massimo.get_R(0) = (3.14159 / 2) + Massimo.get_theta();	// rotating mesh
 
-	Massimo.sim_step(dt, t, Restart);                       //Updating with Eulers
+	Massimo.sim_step(dt, t, Restart);                       // Updating with Eulers
 
 	Massimo.set_camera_view(CameraView);
 

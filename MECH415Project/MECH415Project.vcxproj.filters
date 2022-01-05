@@ -30,16 +30,16 @@
     <ClCompile Include="Walls.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="shared_memory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SharedMemory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="navigation_system.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pipes.cpp">
+    <ClCompile Include="..\modules\Named_Pipes_Multithread\named_pipes\named_pipes\pipes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Reading_Program_Shared_Memory\program_B\shared_memory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Reading_Program_Shared_Memory\program_B\SharedMemory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -71,7 +71,7 @@
     <ClInclude Include="navigation_system.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="pipes.h">
+    <ClInclude Include="..\modules\Named_Pipes_Multithread\named_pipes\named_pipes\pipes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -74,21 +74,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\modules\Named_Pipes_Multithread\named_pipes\named_pipes\pipes.cpp" />
+    <ClCompile Include="..\Reading_Program_Shared_Memory\program_B\SharedMemory.cpp" />
+    <ClCompile Include="..\Reading_Program_Shared_Memory\program_B\shared_memory.cpp" />
     <ClCompile Include="draw_3D_graphics.cpp" />
     <ClCompile Include="navigation_system.cpp" />
-    <ClCompile Include="pipes.cpp" />
     <ClCompile Include="rotation.cpp" />
-    <ClCompile Include="SharedMemory.cpp" />
-    <ClCompile Include="shared_memory.cpp" />
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="Vehicle.cpp" />
     <ClCompile Include="Walls.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\modules\Named_Pipes_Multithread\named_pipes\named_pipes\pipes.h" />
     <ClInclude Include="3D_graphics.h" />
     <ClInclude Include="custom_math.h" />
     <ClInclude Include="navigation_system.h" />
-    <ClInclude Include="pipes.h" />
     <ClInclude Include="ran.h" />
     <ClInclude Include="rotation.h" />
     <ClInclude Include="SharedMemory.h" />

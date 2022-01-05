@@ -14,6 +14,9 @@
 
 #include <algorithm>
 
+
+
+
 using namespace std;
 
 double sum(std::vector<double> a)
@@ -86,7 +89,7 @@ Deviation::~Deviation()
 
 Vehicle::Vehicle(char* Name, int &errorcode)
 {
-
+	
 	int n = strlen(Name);
 
 	this->Name = new char[n+1];
@@ -225,6 +228,19 @@ double Vehicle::get_theta()
 	return theta;
 }
 
+void Vehicle::set_theta(double input)
+{
+	theta = input;
+}
+
+void Vehicle::set_starting_pos()
+{
+	Rot[0] = 0;
+	Rot[1] = 0;
+	Rot[2] = 0;
+	theta = 0;
+}
+
 void Vehicle::get_highscore(int &errorcode)
 {
 	static char file_name[50] = "highscore.txt";
@@ -338,6 +354,10 @@ void Vehicle::sim_step(double dt,double t, int &restart)
 		current_command = nav_system_obj.generate_command_list(t_sim);
 		nav_system_obj.command_list.push_back(current_command);
 		t_sim2 += 0.5;
+		nav_size = nav_system_obj.command_list.size();
+		SM.write_data(&t, &nav_size, &current_command);				                // Write time to shared memory
+
+		//Ipcserver.pipe_broadcast_string = std::to_string(t_sim2) + ":" + std::to_string(current_command);
 	}
 
 
@@ -562,6 +582,7 @@ int collision(Vehicle & Hovercraft, Walls* Wall[],int NumberOfWalls)
 
 			Hovercraft.get_P(0) = 0;
 			Hovercraft.get_P(1) = 0;
+			Hovercraft.set_starting_pos();
 			return 1;
 			
 		}
@@ -577,6 +598,7 @@ int collision(Vehicle & Hovercraft, Walls* Wall[],int NumberOfWalls)
 
 			Hovercraft.get_P(0) = 0;
 			Hovercraft.get_P(1) = 0;
+			Hovercraft.set_starting_pos();
 			return 1;
 		}
 
@@ -591,6 +613,7 @@ int collision(Vehicle & Hovercraft, Walls* Wall[],int NumberOfWalls)
 
 			Hovercraft.get_P(0) = 0;
 			Hovercraft.get_P(1) = 0;
+			Hovercraft.set_starting_pos();
 			return 1;
 		}
 
@@ -605,6 +628,7 @@ int collision(Vehicle & Hovercraft, Walls* Wall[],int NumberOfWalls)
 
 			Hovercraft.get_P(0) = 0;
 			Hovercraft.get_P(1) = 0;
+			Hovercraft.set_starting_pos();
 			return 1;
 		}
 
@@ -618,6 +642,7 @@ int collision(Vehicle & Hovercraft, Walls* Wall[],int NumberOfWalls)
 
 			Hovercraft.get_P(0) = 0;
 			Hovercraft.get_P(1) = 0;
+			Hovercraft.set_starting_pos();
 			return 1;
 		}
 
@@ -635,6 +660,7 @@ int collision(Vehicle & Hovercraft, Walls* Wall[],int NumberOfWalls)
 
 		Hovercraft.get_P(0) = 0;
 		Hovercraft.get_P(1) = 0;
+		Hovercraft.set_starting_pos();
 
 		return 2;
 
@@ -651,6 +677,7 @@ int collision(Vehicle & Hovercraft, Walls* Wall[],int NumberOfWalls)
 
 		Hovercraft.get_P(0) = 0;
 		Hovercraft.get_P(1) = 0;
+		Hovercraft.set_starting_pos();
 
 		return 2;
 	}
@@ -666,6 +693,7 @@ int collision(Vehicle & Hovercraft, Walls* Wall[],int NumberOfWalls)
 
 		Hovercraft.get_P(0) = 0;
 		Hovercraft.get_P(1) = 0;
+		Hovercraft.set_starting_pos();
 
 		return 2;
 	}
@@ -681,6 +709,7 @@ int collision(Vehicle & Hovercraft, Walls* Wall[],int NumberOfWalls)
 
 		Hovercraft.get_P(0) = 0;
 		Hovercraft.get_P(1) = 0;
+		Hovercraft.set_starting_pos();
 
 		return 2;
 	}
@@ -695,6 +724,7 @@ int collision(Vehicle & Hovercraft, Walls* Wall[],int NumberOfWalls)
 
 		Hovercraft.get_P(0) = 0;
 		Hovercraft.get_P(1) = 0;
+		Hovercraft.set_starting_pos();
 
 		return 2;
 	}
