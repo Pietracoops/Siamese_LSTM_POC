@@ -18,7 +18,7 @@ void thread1()
 
 	//Launch broadcasting pipes
 	//Ipcserver.open_log();
-	std::cout << "Launching Server..." << std::endl;
+	std::cout << "Thread 1: Launching Server..." << std::endl;
 	Ipcserver.launch_server();
 }
 
@@ -41,9 +41,9 @@ void thread2()
 		SM.read_data(A, B, C);
 
 
-		std::cout << "broadcast string: " << A[0] << " | " << B[0] << " | " << C[0] << std::endl;
+		std::cout << "Thread 2: broadcast string: " << A[0] << " | " << B[0] << " | " << C[0] << std::endl;
 
-		Ipcserver.pipe_broadcast_string = std::to_string(A[0]);
+		Ipcserver.pipe_broadcast_string = std::to_string(A[0]) + ";" + std::to_string(B[0]) + ";" + std::to_string(C[0]);
 		//cout << A[0] << " Seconds";
 		Sleep(250);
 	}

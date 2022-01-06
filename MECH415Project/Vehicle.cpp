@@ -336,7 +336,7 @@ double & Vehicle::get_friction()
 void Vehicle::set_music(char* wavfile)
 {
 
-	PlaySound(TEXT(wavfile), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+	//PlaySound(TEXT(wavfile), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
 }
 
 
@@ -582,7 +582,7 @@ int collision(Vehicle & Hovercraft, Walls* Wall[],int NumberOfWalls)
 
 			Hovercraft.get_P(0) = 0;
 			Hovercraft.get_P(1) = 0;
-			Hovercraft.set_starting_pos();
+			//Hovercraft.set_starting_pos();
 			return 1;
 			
 		}
@@ -598,7 +598,7 @@ int collision(Vehicle & Hovercraft, Walls* Wall[],int NumberOfWalls)
 
 			Hovercraft.get_P(0) = 0;
 			Hovercraft.get_P(1) = 0;
-			Hovercraft.set_starting_pos();
+			//Hovercraft.set_starting_pos();
 			return 1;
 		}
 
@@ -613,7 +613,7 @@ int collision(Vehicle & Hovercraft, Walls* Wall[],int NumberOfWalls)
 
 			Hovercraft.get_P(0) = 0;
 			Hovercraft.get_P(1) = 0;
-			Hovercraft.set_starting_pos();
+			//Hovercraft.set_starting_pos();
 			return 1;
 		}
 
@@ -628,7 +628,7 @@ int collision(Vehicle & Hovercraft, Walls* Wall[],int NumberOfWalls)
 
 			Hovercraft.get_P(0) = 0;
 			Hovercraft.get_P(1) = 0;
-			Hovercraft.set_starting_pos();
+			//Hovercraft.set_starting_pos();
 			return 1;
 		}
 
@@ -642,7 +642,7 @@ int collision(Vehicle & Hovercraft, Walls* Wall[],int NumberOfWalls)
 
 			Hovercraft.get_P(0) = 0;
 			Hovercraft.get_P(1) = 0;
-			Hovercraft.set_starting_pos();
+			//Hovercraft.set_starting_pos();
 			return 1;
 		}
 
@@ -660,7 +660,7 @@ int collision(Vehicle & Hovercraft, Walls* Wall[],int NumberOfWalls)
 
 		Hovercraft.get_P(0) = 0;
 		Hovercraft.get_P(1) = 0;
-		Hovercraft.set_starting_pos();
+		//Hovercraft.set_starting_pos();
 
 		return 2;
 
@@ -677,7 +677,7 @@ int collision(Vehicle & Hovercraft, Walls* Wall[],int NumberOfWalls)
 
 		Hovercraft.get_P(0) = 0;
 		Hovercraft.get_P(1) = 0;
-		Hovercraft.set_starting_pos();
+		//Hovercraft.set_starting_pos();
 
 		return 2;
 	}
@@ -693,7 +693,7 @@ int collision(Vehicle & Hovercraft, Walls* Wall[],int NumberOfWalls)
 
 		Hovercraft.get_P(0) = 0;
 		Hovercraft.get_P(1) = 0;
-		Hovercraft.set_starting_pos();
+		//Hovercraft.set_starting_pos();
 
 		return 2;
 	}
@@ -709,7 +709,7 @@ int collision(Vehicle & Hovercraft, Walls* Wall[],int NumberOfWalls)
 
 		Hovercraft.get_P(0) = 0;
 		Hovercraft.get_P(1) = 0;
-		Hovercraft.set_starting_pos();
+		//Hovercraft.set_starting_pos();
 
 		return 2;
 	}
@@ -724,7 +724,7 @@ int collision(Vehicle & Hovercraft, Walls* Wall[],int NumberOfWalls)
 
 		Hovercraft.get_P(0) = 0;
 		Hovercraft.get_P(1) = 0;
-		Hovercraft.set_starting_pos();
+		//Hovercraft.set_starting_pos();
 
 		return 2;
 	}

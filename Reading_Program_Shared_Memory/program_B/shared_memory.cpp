@@ -10,7 +10,7 @@ using namespace std;
 
 char * shared_memory(char *name, int n)
 {
-	char *p; // pointer to the shared memory block
+	char *p = NULL; // pointer to the shared memory block
 	HANDLE hFileMapping; // handle to file mapped memory
 
 	// create a file map
