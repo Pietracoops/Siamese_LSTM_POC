@@ -34,6 +34,10 @@ void thread2()
 	int C[1];
 	char str[100];
 
+	A[0] = -1.0;
+	B[0] = -1;
+	C[0] = -1;
+
 	SharedMemory SM(name, n, 1, 2);
 
 	while (true)
@@ -41,11 +45,11 @@ void thread2()
 		SM.read_data(A, B, C);
 
 
-		std::cout << "Thread 2: broadcast string: " << A[0] << " | " << B[0] << " | " << C[0] << std::endl;
+		std::cout << "Thread 2: C++ broadcast string: " << A[0] << " | " << B[0] << " | " << C[0] << std::endl;
 
 		Ipcserver.pipe_broadcast_string = std::to_string(A[0]) + ";" + std::to_string(B[0]) + ";" + std::to_string(C[0]);
 		//cout << A[0] << " Seconds";
-		Sleep(250);
+		Sleep(150);
 	}
 }
 

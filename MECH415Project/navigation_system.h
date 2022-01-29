@@ -26,6 +26,7 @@ public:
 	std::vector<float> Vel_y;
 
 	std::vector<int> command_list;
+	std::vector<int> command_list_size;
 
 	int generate_command_list(float timestamp);
 

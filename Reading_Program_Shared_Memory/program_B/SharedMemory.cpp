@@ -150,17 +150,6 @@ int SharedMemory::read_data(double* A, int* B, int* C)
 			}
 
 			marker = SizeOfDoubleA * 2 + 2;
-			////reading string
-			//counter = 0;
-			//for (int i = SizeOfDoubleA * 8 + 8; i < Size; i++)
-			//{
-			//
-			//	//cout << P[i];
-			//	str[counter] = P[i];
-			//	if (P[i] = '\n') break;
-			//	counter++;
-			//}
-			//cout << endl;
 
 			//reading array of integers
 			counter = 0;
@@ -170,6 +159,7 @@ int SharedMemory::read_data(double* A, int* B, int* C)
 				B[counter] = pint[i];
 				counter++;
 			}
+
 			marker += SizeOfIntA;
 			//reading array of integers
 			counter = 0;

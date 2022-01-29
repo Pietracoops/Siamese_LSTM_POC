@@ -315,6 +315,7 @@ void Vehicle::store_highscore(double highscore, double Restart, int &errorcode)
 		nav_system_obj.Vel_y.clear();
 
 		nav_system_obj.command_list.clear();
+		nav_system_obj.command_list_size.clear();
 	}
 
 }
@@ -352,10 +353,10 @@ void Vehicle::sim_step(double dt,double t, int &restart)
 	if (t - t_sim2 >= 0.5)
 	{
 		current_command = nav_system_obj.generate_command_list(t_sim);
-		nav_system_obj.command_list.push_back(current_command);
 		t_sim2 += 0.5;
 		nav_size = nav_system_obj.command_list.size();
-		SM.write_data(&t, &nav_size, &current_command);				                // Write time to shared memory
+		//nav_system_obj.command_list_size.push_back(nav_size);
+		SM.write_data(&t, &nav_size, &current_command);	     // Write time to shared memory
 
 		//Ipcserver.pipe_broadcast_string = std::to_string(t_sim2) + ":" + std::to_string(current_command);
 	}
