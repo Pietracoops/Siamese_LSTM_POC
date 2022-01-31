@@ -82,14 +82,15 @@ class ModelTrainer:
         with tqdm(self.train_dataloader, unit="batch") as tepoch:
             for i, batch in enumerate(tepoch):
                 tepoch.set_description(f"Epoch [{epoch+1}/{self.epochs}]  Training")
-                if self.device == "cuda":
-                    q1, q2 = batch['q1_token'].to(self.device), batch['q2_token'].to(self.device)
-                    q1_len, q2_len = batch['q1_lengths'].to(self.device), batch['q2_lengths'].to(self.device)
+                if self.device == 'cuda':
+                    list1, list2 = batch['q1_token'], batch['q2_token']
+                    q1, q2 = torch.FloatTensor(list1).to(self.device), torch.FloatTensor(list2).to(self.device)
+                    q1_len, q2_len = torch.FloatTensor(batch['q1_lengths']).to(self.device), torch.FloatTensor(batch['q2_lengths']).to(self.device)
                     y = torch.FloatTensor(batch['labels']).to(self.device)
                 else:
                     q1, q2 = batch['q1_token'], batch['q2_token']
                     q1_len, q2_len = batch['q1_lengths'], batch['q2_lengths']
-                    y = torch.FloatTensor(batch['labels'])
+                    y = torch.FloatTensor(batch['labels']).to(device=self.device)
                 
                 # Reset the gardients 
                 self.optimizer.zero_grad()
@@ -134,7 +135,7 @@ class ModelTrainer:
                 else:
                     q1, q2 = batch['q1_token'], batch['q2_token']
                     q1_len, q2_len = batch['q1_lengths'], batch['q2_lengths']
-                    y = torch.FloatTensor(batch['labels'])
+                    y = torch.FloatTensor(batch['labels']).to(device=self.device)
 
                 # Model forward and predictions
                 similarity = self.model(q1, q2, q1_len, q2_len)
@@ -192,7 +193,7 @@ class ModelTrainer:
                 else:
                     q1, q2 = batch['q1_token'], batch['q2_token']
                     q1_len, q2_len = batch['q1_lengths'], batch['q2_lengths']
-                    y = torch.FloatTensor(batch['labels'])
+                    y = torch.FloatTensor(batch['labels']).to(device=self.device)
 
                 # Model forward and predictions
                 similarity = self.model(q1, q2, q1_len, q2_len)

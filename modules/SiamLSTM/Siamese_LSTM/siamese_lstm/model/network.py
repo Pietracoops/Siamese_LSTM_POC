@@ -84,7 +84,7 @@ class EmbeddingLSTMNet(nn.Module):
         # Model forward 
         embeddings = self.dropout(embeddings)
         # Pack the padded sequences and pass it through LSTM
-        packed = pack_padded_sequence(embeddings, lengths, batch_first=True)
+        packed = pack_padded_sequence(embeddings, lengths, batch_first=True).to(device='cpu')
         out, (hn, cn) = self.lstm(packed)
         # Unpack the padded sequence and pass it through the linear layers 
         unpacked, unpacked_len = pad_packed_sequence(out, batch_first=True, total_length=int(lengths[0]))

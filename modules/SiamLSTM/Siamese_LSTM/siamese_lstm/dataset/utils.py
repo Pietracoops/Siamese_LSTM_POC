@@ -4,6 +4,15 @@ from nltk.stem import WordNetLemmatizer, SnowballStemmer
 from nltk.corpus import stopwords
 
 
+def sequence_to_list(text):
+
+    # Clean sequence
+    text = re.sub(r"-1", "5", text)
+
+    # Return a list of actions
+    text = text.strip()
+    return text
+
 def text_to_wordlist(text, remove_stopwords, stem_words):
     """ 
     This function was adapoted from 
@@ -79,19 +88,21 @@ def text_to_wordlist(text, remove_stopwords, stem_words):
     return text
 
 
-def convert_data_to_tuples(df, remove_stopwords, stem_words):
-    questions_pair = []
+def convert_data_to_tuples(df):
+    sequence_pair = []
     labels = []
     for _, row in df.iterrows():
-
-        q1 = text_to_wordlist(str(row['question1']), remove_stopwords, stem_words)
-        q2 = text_to_wordlist(str(row['question2']), remove_stopwords, stem_words)
+        
+        q1 = sequence_to_list(str(row['sequence1']))
+        q2 = sequence_to_list(str(row['sequence2']))
+        #q1 = text_to_wordlist(str(row['sequence1']), remove_stopwords, stem_words)
+        #q2 = text_to_wordlist(str(row['sequence2']), remove_stopwords, stem_words)
         label = int(row['is_duplicate'])
         if q1 and q2:
-            questions_pair.append((q1, q2))
+            sequence_pair.append((q1, q2))
             labels.append(label)
 
-    print ('Question Pairs: ', len(questions_pair))
-    return questions_pair, labels
+    print ('Sequence Pairs: ', len(sequence_pair))
+    return sequence_pair, labels
 
 
